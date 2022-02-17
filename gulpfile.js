@@ -1,8 +1,8 @@
-const gulp = require('gulp')
+const gulp = require('gulp');
 const less = require('gulp-less');
-const rename = require('gulp-rename')
-const cleanCSS = require('gulp-clean-css')
-const del = require('del')
+const rename = require('gulp-rename');
+const cleanCSS = require('gulp-clean-css');
+const del = require('del');
 
 const paths = {
   styles: {
@@ -11,25 +11,32 @@ const paths = {
   },
   scripts: {
     src: 'src/scripts/**/*.js',
-    dest: 'dist/js/'
-  }
+    dest: 'dist/js/',
+  },
 };
 
 function clean() {
-	return del(['dist'])
+  return del(['dist']);
 }
 
 function styles() {
-  	return gulp.src(paths.styles.src)
-	  .pipe(less())
-	  .pipe(cleanCSS())
-	  .pipe(rename({
-		basename: 'main',
-		suffix:'.min'
-	  }))
-	  .pipe(gulp.dest(paths.styles.dest))
+  return gulp
+    .src(paths.styles.src)
+    .pipe(less())
+    .pipe(cleanCSS())
+    .pipe(
+      rename({
+        basename: 'main',
+        suffix: '.min',
+      })
+    )
+    .pipe(gulp.dest(paths.styles.dest))
 }
 
+function watch() {
+  gulp.watch(paths.styles.src, styles)
+}
 
-exports.clean = clean
-exports.styles = styles
+exports.clean = clean;
+exports.styles = styles;
+exports.watch = watch;
